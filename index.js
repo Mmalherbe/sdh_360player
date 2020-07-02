@@ -16,7 +16,9 @@
 'use strict';
 
 // Create viewer.
-var viewer = new Marzipano.Viewer(document.getElementById('pano'));
+// Video requires WebGL support.
+var viewerOpts = { stageType: 'webgl' };
+var viewer = new Marzipano.Viewer(document.getElementById('pano'), viewerOpts);
 
 // Register the custom control method.
 var deviceOrientationControlMethod = new DeviceOrientationControlMethod();
@@ -24,16 +26,44 @@ var controls = viewer.controls();
 controls.registerMethod('deviceOrientation', deviceOrientationControlMethod);
 
 // Create source.
-var source = Marzipano.ImageUrlSource.fromString(
-  "//www.marzipano.net/media/cubemap/{f}.jpg"
-);
+var asset = new VideoAsset();
+var source = new Marzipano.SingleAssetSource(asset);
+
+var video = document.createElement('video');
+video.src = '//timfi.github.io/360_webplayer/marzipano-video/TuinComp_V3_tim.mp4';
+video.crossOrigin = 'anonymous';
+
+video.autoplay = true;
+video.loop = true;
+
+// Prevent the video from going full screen on iOS.
+video.playsInline = true;
+video.webkitPlaysInline = true;
+
+video.play();
+
+waitForReadyState(video, video.HAVE_METADATA, 100, function() {
+  waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
+    asset.setVideo(video);
+  });
+});
+
+function waitForReadyState(element, readyState, interval, done) {
+  var timer = setInterval(function() {
+    if (element.readyState >= readyState) {
+      clearInterval(timer);
+      done(null, true);
+    }
+  }, interval);
+}
+
 
 // Create geometry.
-var geometry = new Marzipano.CubeGeometry([{ tileSize: 1024, size: 1024 }]);
+var geometry = new Marzipano.EquirectGeometry([ { width: 1 } ]);
 
 // Create view.
-var limiter = Marzipano.RectilinearView.limit.traditional(1024, 100*Math.PI/180);
-var view = new Marzipano.RectilinearView(null, limiter);
+var limiter = Marzipano.RectilinearView.limit.vfov(90*Math.PI/180, 90*Math.PI/180);
+var view = new Marzipano.RectilinearView({ fov: Math.PI/2 }, limiter);
 
 // Create scene.
 var scene = viewer.createScene({
