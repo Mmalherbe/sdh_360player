@@ -26,27 +26,39 @@ var controls = viewer.controls();
 controls.registerMethod('deviceOrientation', deviceOrientationControlMethod);
 
 // Create source.
-var asset = new VideoAsset();
-var source = new Marzipano.SingleAssetSource(asset);
+var videoAsset = new VideoAsset();
+// var source = new Marzipano.SingleAssetSource(imgAsset);
+var imageSource = new Marzipano.ImageUrlSource.fromString("still.png");
+
+// Whether playback has started.
+var started = false;
 
 var video = document.createElement('video');
-video.src = '//timfi.github.io/360_webplayer/marzipano-video/TuinComp_V3_tim.mp4';
-video.crossOrigin = 'anonymous';
+video.src = 'TuinComp_V3_tim.mp4';
+video.crossOrigin = 'Marcel';
 
-video.autoplay = true;
-video.loop = true;
+// Try to start playback.
+function tryStart() {
+  if (started) {
+    return;
+  }
+  started = true;
 
-// Prevent the video from going full screen on iOS.
-video.playsInline = true;
-video.webkitPlaysInline = true;
+  video.autoplay = true;
+  video.loop = true;
 
-video.play();
+  // Prevent the video from going full screen on iOS.
+  video.playsInline = true;
+  video.webkitPlaysInline = true;
+  scene.source = videoAsset;
+  video.play();
 
-waitForReadyState(video, video.HAVE_METADATA, 100, function() {
-  waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
-    asset.setVideo(video);
+  waitForReadyState(video, video.HAVE_METADATA, 100, function() {
+    waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
+      asset.setVideo(video);
+    });
   });
-});
+}
 
 function waitForReadyState(element, readyState, interval, done) {
   var timer = setInterval(function() {
@@ -67,7 +79,7 @@ var view = new Marzipano.RectilinearView({ fov: Math.PI/2 }, limiter);
 
 // Create scene.
 var scene = viewer.createScene({
-  source: source,
+  source: imageSource,
   geometry: geometry,
   view: view,
   pinFirstLevel: true
@@ -75,6 +87,12 @@ var scene = viewer.createScene({
 
 // Display scene.
 scene.switchTo();
+
+// Start playback on click.
+// Playback cannot start automatically because most browsers require the play()
+// method on the video element to be called in the context of a user action.
+document.body.addEventListener('click', tryStart);
+document.body.addEventListener('touchstart', tryStart);
 
 // Set up control for enabling/disabling device orientation.
 
