@@ -27,7 +27,7 @@ controls.registerMethod('deviceOrientation', deviceOrientationControlMethod);
 
 // Create source.
 var videoAsset = new VideoAsset();
-// var source = new Marzipano.SingleAssetSource(imgAsset);
+var videoSource = new Marzipano.SingleAssetSource(videoAsset);
 var imageSource = new Marzipano.ImageUrlSource.fromString("still.png");
 
 // Whether playback has started.
@@ -50,12 +50,12 @@ function tryStart() {
   // Prevent the video from going full screen on iOS.
   video.playsInline = true;
   video.webkitPlaysInline = true;
-  scene.source = videoAsset;
+  videoScene.switchTo();
   video.play();
 
   waitForReadyState(video, video.HAVE_METADATA, 100, function() {
     waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
-      asset.setVideo(video);
+      videoAsset.setVideo(video);
     });
   });
 }
@@ -78,15 +78,20 @@ var limiter = Marzipano.RectilinearView.limit.vfov(90*Math.PI/180, 90*Math.PI/18
 var view = new Marzipano.RectilinearView({ fov: Math.PI/2 }, limiter);
 
 // Create scene.
-var scene = viewer.createScene({
+var imgScene = viewer.createScene({
   source: imageSource,
   geometry: geometry,
   view: view,
-  pinFirstLevel: true
+});
+
+var videoScene = viewer.createScene({
+  source: videoSource,
+  geometry: geometry,
+  view: view,
 });
 
 // Display scene.
-scene.switchTo();
+imgScene.switchTo();
 
 // Start playback on click.
 // Playback cannot start automatically because most browsers require the play()
