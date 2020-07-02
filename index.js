@@ -35,7 +35,9 @@ var started = false;
 
 var video = document.createElement('video');
 video.src = 'TuinComp_V3_tim.mp4';
-video.crossOrigin = 'Marcel';
+video.crossOrigin = 'anonymous'
+video.preload = ''
+
 
 // Try to start playback.
 function tryStart() {
