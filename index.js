@@ -53,6 +53,18 @@ var enabled = false;
 var toggleElement = document.getElementById('toggleDeviceOrientation');
 
 function enable() {
+  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // iOS 13+
+    DeviceOrientationEvent.requestPermission()
+    .then(response => {
+      if (response != 'granted') {
+        return;
+      }
+    })
+  .catch(console.error)
+  } else {
+    // non iOS 13+
+  }
   deviceOrientationControlMethod.getPitch(function(err, pitch) {
     if (!err) {
       view.setPitch(pitch);
