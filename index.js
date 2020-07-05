@@ -35,7 +35,7 @@ var started = false;
 
 var video = document.createElement('video');
 video.src = 'TuinComp_V3_tim.mp4'
-video.src = 'TuinComp_V3_tim.webm';
+// video.src = 'TuinComp_V3_tim.webm';
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
 
@@ -47,7 +47,7 @@ function tryStart() {
   }
   started = true;
 
-  video.autoplay = true;
+  //video.autoplay = true;
   video.loop = true;
 
   // Prevent the video from going full screen on iOS.
