@@ -36,7 +36,6 @@ var started = false;
 
 var video = document.createElement('video');
 video.src = 'TuinComp_V3_tim.mp4'
-// video.src = 'TuinComp_V3_tim.webm';
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
 
@@ -55,6 +54,8 @@ function tryStart() {
   video.webkitPlaysInline = true;
   video.play();
 
+  
+
   waitForReadyState(video, video.HAVE_METADATA, 100, function() {
     console.log("Video has metadata");
     waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
@@ -66,8 +67,10 @@ function tryStart() {
   //only switch to video if it plays successfully
   video.onplaying = function() {
     console.log('Video is now loaded and playing');
-    videoScene.switchTo();
-  }
+    scene.createLayer({
+      source: videoSource,
+      geometry: geometry,
+    });  }
 
 }
 
@@ -91,20 +94,23 @@ var limiter = Marzipano.RectilinearView.limit.vfov(90*Math.PI/180, 90*Math.PI/18
 var view = new Marzipano.RectilinearView({ fov: Math.PI/2 }, limiter);
 
 // Create scene.
-var imgScene = viewer.createScene({
+var scene = viewer.createScene({
   source: imageSource,
-  geometry: geometry,
   view: view,
+  geometry: geometry
 });
 
-var videoScene = viewer.createScene({
-  source: videoSource,
+//create imglayer
+scene.createLayer({
+  source: imageSource,
   geometry: geometry,
-  view: view,
+  //make this a fallback layer
+  pinFirstLevel: true
 });
 
 // Display scene.
-imgScene.switchTo();
+scene.switchTo();
+
 
 // Start playback on click.
 // Playback cannot start automatically because most browsers require the play()
@@ -151,3 +157,14 @@ function toggle() {
 }
 
 toggleElement.addEventListener('click', toggle);
+
+//hotspots
+var container = scene.hotspotContainer();
+
+container.createHotspot(document.getElementById('iframespot01'), { yaw: 0.0335, pitch: -0.102 },
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+
+
+var wrapper = document.getElementById('iframespot01');
+wrapper.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
