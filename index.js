@@ -54,19 +54,24 @@ function tryStart() {
   video.playsInline = true;
   video.webkitPlaysInline = true;
   video.play();
+
+  waitForReadyState(video, video.HAVE_METADATA, 100, function() {
+    console.log("Video has metadata");
+    waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
+      console.log("Video has enough data");
+      videoAsset.setVideo(video);
+    });
+  });
+
   //only switch to video if it plays successfully
   video.onplaying = function() {
     console.log('Video is now loaded and playing');
     videoScene.switchTo();
   }
 
-
-  waitForReadyState(video, video.HAVE_METADATA, 100, function() {
-    waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
-      videoAsset.setVideo(video);
-    });
-  });
 }
+
+
 
 function waitForReadyState(element, readyState, interval, done) {
   var timer = setInterval(function() {
