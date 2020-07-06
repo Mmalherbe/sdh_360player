@@ -53,8 +53,12 @@ function tryStart() {
   // Prevent the video from going full screen on iOS.
   video.playsInline = true;
   video.webkitPlaysInline = true;
-  videoScene.switchTo();
   video.play();
+  video.onplaying = function() {
+    console.log('Video is now loaded and playing');
+    videoScene.switchTo();
+  }
+
 
   waitForReadyState(video, video.HAVE_METADATA, 100, function() {
     waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
