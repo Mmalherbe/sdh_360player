@@ -161,10 +161,24 @@ toggleElement.addEventListener('click', toggle);
 //hotspots
 var container = scene.hotspotContainer();
 
-container.createHotspot(document.getElementById('iframespot01'), { yaw: 0.0335, pitch: -0.102 },
+container.createHotspot(document.getElementById('iframespot01'), { yaw: 0.0000, pitch: -0.102 },
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+container.createHotspot(document.getElementById('iframespot02'), { yaw: 5.0000, pitch: -0.102 },
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+container.createHotspot(document.getElementById('iframespot03'), { yaw: 10.0000, pitch: -0.102 },
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+container.createHotspot(document.getElementById('iframespot04'), { yaw: 15.0000, pitch: -0.102 },
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
 
 
 var wrapper = document.getElementById('iframespot01');
 wrapper.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 
+var wrapper = document.getElementById('iframespot02');
+wrapper.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
+var wrapper = document.getElementById('iframespot03');
+wrapper.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
+var wrapper = document.getElementById('iframespot04');
+wrapper.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
