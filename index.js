@@ -54,6 +54,7 @@ function tryStart() {
   video.playsInline = true;
   video.webkitPlaysInline = true;
   video.play();
+  //only switch to video if it plays successfully
   video.onplaying = function() {
     console.log('Video is now loaded and playing');
     videoScene.switchTo();
