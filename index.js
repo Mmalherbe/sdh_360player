@@ -19,6 +19,7 @@
 // Video requires WebGL support.
 var viewerOpts = { stageType: 'webgl' };
 var viewer = new Marzipano.Viewer(document.getElementById('pano'), viewerOpts);
+var data = window.data;
 
 // Register the custom control method.
 var deviceOrientationControlMethod = new DeviceOrientationControlMethod();
@@ -36,8 +37,7 @@ var started = false;
 var video = document.createElement('video');
 video.src = 'TuinComp_V3_tim.mp4';
 video.crossOrigin = 'anonymous'
-video.preload = ''
-
+video.preload = 'auto'
 
 // Try to start playback.
 function tryStart() {
