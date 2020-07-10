@@ -43,23 +43,23 @@ html, body {
   margin-right: auto;
 }
 
-/* #iframespot01 {
+#iframespot01 {
   background-color: yellow;
   height: 1200px;
   width: 640px;
-  opacity: 1;
-} */
+  opacity: 0;
+}
 
-/* #iframespot01 img {
+#iframespot01 img {
   width: 100%;
   height: 100%;
-} */
+}
 
 #iframespot02 {
   background-color: yellow;
   height: 1100px;
   width: 640px;
-  opacity: 0.1;
+  opacity: 0;
 }
 
 #iframespot02 img {
@@ -71,7 +71,7 @@ html, body {
   background-color: yellow;
   height: 1200px;
   width: 640px;
-  opacity: 0.1;
+  opacity: 0;
 }
 
 #iframespot03 img {
@@ -83,7 +83,7 @@ html, body {
   background-color: yellow;
   height: 1200px;
   width: 640px;
-  opacity: 0.1;
+  opacity: 0;
 }
 
 #iframespot04 img {
@@ -131,4 +131,29 @@ html, body {
 
 #toggleDeviceOrientation.enabled .enable {
   display: none;
+}
+
+.overlayVideo {
+  position:absolute;
+  z-index:2;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  opacity:0;
+  visibility:hidden;
+  transition:.3s ease;
+}
+
+.show-overlayVideo .overlayVideo {
+  opacity:1;
+  visibility: visible;    
+}
+
+.overlayVideo > iframe {
+  position:absolute;
+  top:50px;
+  left:50%;
+  margin-left:-280px;
 }

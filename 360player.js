@@ -193,6 +193,32 @@ container.createHotspot(document.getElementById('iframespot03'), { yaw: yaw03, p
 container.createHotspot(document.getElementById('iframespot04'), { yaw: yaw04, pitch: pitch04 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
 
+
+//START
+$("[data-media]").on("click", function(e) {
+  e.preventDefault();
+  var $this = $(this);
+  var videoUrl = $this.attr("data-media");
+  var popup = $this.attr("href");
+  var $popupIframe = $(popup).find("iframe");
+
+  $popupIframe.attr("src", videoUrl);
+
+  $this.closest(".page").addClass("show-overlayVideo");
+});
+
+$(".overlayVideo").on("click", function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  $(".page").removeClass("show-overlayVideo");
+});
+
+$(".overlayVideo > iframe").on("click", function(e) {
+  e.stopPropagation();
+});
+//END
+
 function iframespotClicked(input = input){
   console.log(input);
   if ( input == 1 ){
@@ -208,9 +234,9 @@ function iframespotClicked(input = input){
   }
 }
 
-var wrapper01 = document.getElementById('iframespot01');
-// wrapper01.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/4czVNcebruc?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-wrapper01.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+// var wrapper01 = document.getElementById('iframespot01');
+// wrapper01.innerHTML = '<iframe width="640" height="1200">';
+
 // var wrapper02 = document.getElementById('iframespot02');
 // wrapper02.innerHTML = '<iframe width="640" height="1100">';
 
