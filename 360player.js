@@ -222,6 +222,7 @@ function closeIframe(){
   var overlayVideo = document.getElementById('overlayVideo');
   var backButton = document.getElementById('close');
   var motionButton = document.getElementById('toggleDeviceOrientation');
+  overlayVideo.innerHTML = '';
   overlayVideo.style.display = 'none';
   backButton.style.display = 'block';
   motionButton.style.display = 'block';
