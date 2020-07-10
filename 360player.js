@@ -1,7 +1,6 @@
 'use strict';
 
 //Set the backButtonMode options: disabled, home, back
-var backButtonMode = "disabled";
 
 var overlayVideo = document.getElementById('overlayVideo');
 var backButton = document.getElementById('close');
@@ -13,22 +12,8 @@ var hotspot03 = document.getElementById('iframespot03');
 var hotspot04 = document.getElementById('iframespot04');
 var hotspotImages = document.getElementsByClassName("transparant-img");
 
-function backButton(){
-  if ( backButtonMode == "disabled" ) {
-    return;
-  } else if ( backButtonMode == "home" || document.referrer == "") {
-    window.open("https://slagwerkdenhaag.nl/", "_self"); //TODO: change to /?
-  } else if ( backButtonMode == "back" ) {
-    window.history.back();
-  } else {
-    return;
-  }
-}
-
-if ( backButtonMode == "disabled" || true ) {
-  // console.log("RAN");
-  backButton.style.display = 'none';
-} 
+backButton.style.display = 'none';
+toggleElement.style.display = 'none';
 
 // Create viewer.
 // Video requires WebGL support.
@@ -59,6 +44,15 @@ video.preload = 'auto'
 function hideIntro(){
     intro.style.display = "none";
     intro.style.zIndex = -100;
+    tryStart();
+    video.play();
+}
+
+function showToggleElement(){
+  // if mobile
+  if (typeof DeviceMotionEvent.requestPermission === "function") {
+    toggleElement.style.display = 'block';
+  }
 }
 
 // Try to start playback.
@@ -67,7 +61,6 @@ function tryStart() {
   if (started) {
     return;
   }
-  hideIntro();
   started = true;
 
   //video.autoplay = true;
@@ -139,19 +132,24 @@ scene.switchTo();
 // Start playback on click.
 // Playback cannot start automatically because most browsers require the play()
 // method on the video element to be called in the context of a user action.
-document.body.addEventListener('click', tryStart);
-document.body.addEventListener('touchstart', tryStart);
+// intro.addEventListener('click', tryStart);
+// intro.addEventListener('touchstart', tryStart);
+// document.body.addEventListener('click', tryStart);
+// document.body.addEventListener('touchstart', tryStart);
 
 // Set up control for enabling/disabling device orientation.
 
 var enabled = false;
 
+// if ( DeviceMotionEvent ){
+//   toggleElement.style.zIndex = '-100';
+// }
 
 
 function enable() {
   // Request permission for iOS 13+ devices
   // console.log("RANNN");
-  if (
+  if ( 
     DeviceMotionEvent &&
     typeof DeviceMotionEvent.requestPermission === "function"
   ) {
@@ -209,8 +207,8 @@ function closeIframe(){
   // console.log("TRYING TO CLOSE IFRAME")
   overlayVideo.innerHTML = '';
   overlayVideo.style.display = 'none';
-  backButton.style.display = 'block';
-  toggleElement.style.display = 'block';
+  backButton.style.display = 'none';
+  showToggleElement()
   for (var i = 0; i < hotspotImages.length; i++) {
     hotspotImages[i].style.display = 'block';
   }
@@ -220,7 +218,9 @@ function iframespotClicked(input = input){
   // console.log(input);
   overlayVideo.style.zIndex = 100;
   overlayVideo.style.display = 'block';
-  backButton.style.display = 'none';
+  backButton.style.display = 'block';
+  disable();
+  video.pause();
   toggleElement.style.display = 'none';
   for (var i = 0; i < hotspotImages.length; i++) {
     hotspotImages[i].style.display = 'none';
