@@ -46,6 +46,7 @@ function hideIntro(){
     intro.style.zIndex = -100;
     tryStart();
     video.play();
+    enable();
 }
 
 function showToggleElement(){
