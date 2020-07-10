@@ -1,5 +1,24 @@
 'use strict';
 
+//Set the backButtonMode options: disabled, home, back
+var backButtonMode = "home"
+
+function backButton(){
+  if ( backButtonMode == "disabled" ) {
+    return;
+  } else if ( backButtonMode == "home" || document.referrer == "") {
+    window.open("https://slagwerkdenhaag.nl/", "_self"); //TODO: change to /?
+  } else if ( backButtonMode == "back" ) {
+    window.history.back();
+  } else {
+    return;
+  }
+}
+
+// var backButton = document.getElementById("close");
+// backButton.
+
+
 // Create viewer.
 // Video requires WebGL support.
 var viewerOpts = { stageType: 'webgl' };
@@ -27,6 +46,7 @@ video.preload = 'auto'
 function hideIntro(){
     var intro = document.getElementById("intro");
     intro.style.display = "none";
+    intro.style.zIndex = -100;
 }
 
 // Try to start playback.
