@@ -1,7 +1,17 @@
 'use strict';
 
 //Set the backButtonMode options: disabled, home, back
-var backButtonMode = "home"
+var backButtonMode = "disabled";
+
+var overlayVideo = document.getElementById('overlayVideo');
+var backButton = document.getElementById('close');
+var intro = document.getElementById("intro");
+var toggleElement = document.getElementById('toggleDeviceOrientation');
+var hotspot01 = document.getElementById('iframespot01');
+var hotspot02 = document.getElementById('iframespot02');
+var hotspot03 = document.getElementById('iframespot03');
+var hotspot04 = document.getElementById('iframespot04');
+var hotspotImages = document.getElementsByClassName("transparant-img");
 
 function backButton(){
   if ( backButtonMode == "disabled" ) {
@@ -14,6 +24,11 @@ function backButton(){
     return;
   }
 }
+
+if ( backButtonMode == "disabled" || true ) {
+  // console.log("RAN");
+  backButton.style.display = 'none';
+} 
 
 // Create viewer.
 // Video requires WebGL support.
@@ -42,7 +57,6 @@ video.crossOrigin = 'anonymous'
 video.preload = 'auto'
 
 function hideIntro(){
-    var intro = document.getElementById("intro");
     intro.style.display = "none";
     intro.style.zIndex = -100;
 }
@@ -67,16 +81,16 @@ function tryStart() {
   
 
   waitForReadyState(video, video.HAVE_METADATA, 100, function() {
-    console.log("Video has metadata");
+    // console.log("Video has metadata");
     waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
-      console.log("Video has enough data");
+      // console.log("Video has enough data");
       videoAsset.setVideo(video);
     });
   });
 
   //only switch to video if it plays successfully
   video.onplaying = function() {
-    console.log('Video is now loaded and playing');
+    // console.log('Video is now loaded and playing');
     scene.createLayer({
       source: videoSource,
       geometry: geometry,
@@ -132,12 +146,11 @@ document.body.addEventListener('touchstart', tryStart);
 
 var enabled = false;
 
-var toggleElement = document.getElementById('toggleDeviceOrientation');
-var backButton = document.getElementById('close');
+
 
 function enable() {
   // Request permission for iOS 13+ devices
-  console.log("RANNN");
+  // console.log("RANNN");
   if (
     DeviceMotionEvent &&
     typeof DeviceMotionEvent.requestPermission === "function"
@@ -182,62 +195,37 @@ var yaw02 = 70 * Math.PI/180 //drumstokken
 var yaw03 = 149 * Math.PI/180 //emmer
 var yaw04 = 230 * Math.PI/180 //microfoon
 
-container.createHotspot(document.getElementById('iframespot01'), { yaw: yaw01, pitch: pitch01 }, 
+container.createHotspot(hotspot01, { yaw: yaw01, pitch: pitch01 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
-container.createHotspot(document.getElementById('iframespot02'), { yaw: yaw02, pitch: pitch02 }, 
+container.createHotspot(hotspot02, { yaw: yaw02, pitch: pitch02 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
-container.createHotspot(document.getElementById('iframespot03'), { yaw: yaw03, pitch: pitch03 }, 
+container.createHotspot(hotspot03, { yaw: yaw03, pitch: pitch03 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
-container.createHotspot(document.getElementById('iframespot04'), { yaw: yaw04, pitch: pitch04 }, 
+container.createHotspot(hotspot04, { yaw: yaw04, pitch: pitch04 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
 
-
-//START
-$("[data-media]").on("click", function(e) {
-  e.preventDefault();
-  var $this = $(this);
-  var videoUrl = $this.attr("data-media");
-  var popup = $this.attr("href");
-  var $popupIframe = $(popup).find("iframe");
-
-  $popupIframe.attr("src", videoUrl);
-
-  $this.closest(".page").addClass("show-overlayVideo");
-});
-
-$(".overlayVideo").on("click", function(e) {
-  e.preventDefault();
-  e.stopPropagation();
-
-  $(".page").removeClass("show-overlayVideo");
-});
-
-$(".overlayVideo > iframe").on("click", function(e) {
-  e.stopPropagation();
-});
-//END
 
 function closeIframe(){
-  console.log("TRYING TO CLOSE IFRAME")
-  var overlayVideo = document.getElementById('overlayVideo');
-  var backButton = document.getElementById('close');
-  var motionButton = document.getElementById('toggleDeviceOrientation');
+  // console.log("TRYING TO CLOSE IFRAME")
   overlayVideo.innerHTML = '';
   overlayVideo.style.display = 'none';
   backButton.style.display = 'block';
-  motionButton.style.display = 'block';
+  toggleElement.style.display = 'block';
+  for (var i = 0; i < hotspotImages.length; i++) {
+    hotspotImages[i].style.display = 'block';
+  }
 }
 
 function iframespotClicked(input = input){
-  var overlayVideo = document.getElementById('overlayVideo');
-  var backButton = document.getElementById('close');
-  var motionButton = document.getElementById('toggleDeviceOrientation');
-  console.log(input);
+  // console.log(input);
   overlayVideo.style.zIndex = 100;
   overlayVideo.style.display = 'block';
   backButton.style.display = 'none';
-  motionButton.style.display = 'none';
-  console.log("READDDDASDASD");
+  toggleElement.style.display = 'none';
+  for (var i = 0; i < hotspotImages.length; i++) {
+    hotspotImages[i].style.display = 'none';
+  }
+  // console.log("READDDDASDASD");
   if ( input == 1 ){
     //window.open("01_planten.html", "_self"); //TODO: change to /?
     overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436186152?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
@@ -254,16 +242,3 @@ function iframespotClicked(input = input){
     return;
   }
 }
-
-// var wrapper01 = document.getElementById('iframespot01');
-// wrapper01.innerHTML = '<iframe width="640" height="1200">';
-
-// var wrapper02 = document.getElementById('iframespot02');
-// wrapper02.innerHTML = '<iframe width="640" height="1100">';
-
-// var wrapper03 = document.getElementById('iframespot03');
-// wrapper03.innerHTML = '<iframe width="640" height="1200">';
-
-// var wrapper04 = document.getElementById('iframespot04');
-// wrapper04.innerHTML = '<iframe width="640" height="1200">';
-
