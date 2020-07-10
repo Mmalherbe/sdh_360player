@@ -51,8 +51,11 @@ function hideIntro(){
 
 function showToggleElement(){
   // if mobile
-  if (typeof DeviceMotionEvent.requestPermission === "function") {
+  if (/Mobi|Android/i.test(navigator.userAgent )) {
+    console.log("MOBILE!!");
     toggleElement.style.display = 'block';
+  } else {
+    console.log("NOT MOBILE");
   }
 }
 
