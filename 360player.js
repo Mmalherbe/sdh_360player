@@ -33,13 +33,15 @@ controls.registerMethod('deviceOrientation', deviceOrientationControlMethod);
 // Create source.
 var videoAsset = new VideoAsset();
 var videoSource = new Marzipano.SingleAssetSource(videoAsset);
-var imageSource = new Marzipano.ImageUrlSource.fromString("//timfi.github.io/sdh_360player/still.jpg");
+// var imageSource = new Marzipano.ImageUrlSource.fromString("//timfi.github.io/sdh_360player/still.jpg");
+var imageSource = new Marzipano.ImageUrlSource.fromString("still.jpg");
 
 // Whether playback has started.
 var started = false;
 
 var video = document.createElement('video');
-video.src = '//timfi.github.io/sdh_360player/video/TuinComp_V4.mp4'
+// video.src = '//timfi.github.io/sdh_360player/video/TuinComp_V4.mp4'
+video.src = 'video/TuinComp_V4.mp4'
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
 
@@ -191,22 +193,24 @@ container.createHotspot(document.getElementById('iframespot03'), { yaw: yaw03, p
 container.createHotspot(document.getElementById('iframespot04'), { yaw: yaw04, pitch: pitch04 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
 
-function iframespot01Clicked(){
-  console.log("CLICKED1");
-}
-function iframespot02Clicked(){
-  console.log("CLICKED2");
-}
-function iframespot03Clicked(){
-  console.log("CLICKED3");
-}
-function iframespot04Clicked(){
-  console.log("CLICKED4");
+function iframespotClicked(input = input){
+  console.log(input);
+  if ( input == 1 ){
+    window.open("01_planten.html", "_self"); //TODO: change to /?
+  } else if ( input == 2 ){
+    window.open("02_potjes.html", "_self"); //TODO: change to /?
+  } else if ( input == 3 ){
+    window.open("03_water.html", "_self"); //TODO: change to /?
+  } else if ( input == 4 ){
+    window.open("04_zingen.html", "_self"); //TODO: change to /?
+  } else {
+    return;
+  }
 }
 
-// var wrapper01 = document.getElementById('iframespot01');
-// wrapper01.innerHTML = '<iframe width="640" height="1200">';
-
+var wrapper01 = document.getElementById('iframespot01');
+// wrapper01.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/4czVNcebruc?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+wrapper01.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/McA6poq3AVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 // var wrapper02 = document.getElementById('iframespot02');
 // wrapper02.innerHTML = '<iframe width="640" height="1100">';
 
