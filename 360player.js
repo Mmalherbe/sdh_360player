@@ -137,6 +137,7 @@ var toggleElement = document.getElementById('toggleDeviceOrientation');
 
 function enable() {
   // Request permission for iOS 13+ devices
+  console.log("RANNN");
   if (
     DeviceMotionEvent &&
     typeof DeviceMotionEvent.requestPermission === "function"
@@ -190,16 +191,28 @@ container.createHotspot(document.getElementById('iframespot03'), { yaw: yaw03, p
 container.createHotspot(document.getElementById('iframespot04'), { yaw: yaw04, pitch: pitch04 }, 
   { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
 
+function iframespot01Clicked(){
+  console.log("CLICKED1");
+}
+function iframespot02Clicked(){
+  console.log("CLICKED2");
+}
+function iframespot03Clicked(){
+  console.log("CLICKED3");
+}
+function iframespot04Clicked(){
+  console.log("CLICKED4");
+}
 
-var wrapper01 = document.getElementById('iframespot01');
-wrapper01.innerHTML = '<iframe src="" width="640" height="1200">';
+// var wrapper01 = document.getElementById('iframespot01');
+// wrapper01.innerHTML = '<iframe width="640" height="1200">';
 
-var wrapper02 = document.getElementById('iframespot02');
-wrapper02.innerHTML = '<iframe src="" width="640" height="1100">';
+// var wrapper02 = document.getElementById('iframespot02');
+// wrapper02.innerHTML = '<iframe width="640" height="1100">';
 
-var wrapper03 = document.getElementById('iframespot03');
-wrapper03.innerHTML = '<iframe src="" width="640" height="1200">';
+// var wrapper03 = document.getElementById('iframespot03');
+// wrapper03.innerHTML = '<iframe width="640" height="1200">';
 
-var wrapper04 = document.getElementById('iframespot04');
-wrapper04.innerHTML = '<iframe src="" width="640" height="1200">';
+// var wrapper04 = document.getElementById('iframespot04');
+// wrapper04.innerHTML = '<iframe width="640" height="1200">';
 
