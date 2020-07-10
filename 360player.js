@@ -1,0 +1,194 @@
+/*
+ * Copyright 2016 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+'use strict';
+
+// Create viewer.
+// Video requires WebGL support.
+var viewerOpts = { stageType: 'webgl' };
+var viewer = new Marzipano.Viewer(document.getElementById('pano'), viewerOpts);
+var data = window.data;
+
+// Register the custom control method.
+var deviceOrientationControlMethod = new DeviceOrientationControlMethod();
+var controls = viewer.controls();
+controls.registerMethod('deviceOrientation', deviceOrientationControlMethod);
+
+// Create source.
+var videoAsset = new VideoAsset();
+var videoSource = new Marzipano.SingleAssetSource(videoAsset);
+var imageSource = new Marzipano.ImageUrlSource.fromString("still.jpg");
+
+// Whether playback has started.
+var started = false;
+
+var video = document.createElement('video');
+video.src = 'video/TuinComp_V4.mp4'
+video.crossOrigin = 'anonymous'
+video.preload = 'auto'
+
+// Try to start playback.
+function tryStart() {
+  if (started) {
+    return;
+  }
+  started = true;
+
+  //video.autoplay = true;
+  video.loop = true;
+
+  // Prevent the video from going full screen on iOS.
+  video.playsInline = true;
+  video.webkitPlaysInline = true;
+  video.play();
+
+  
+
+  waitForReadyState(video, video.HAVE_METADATA, 100, function() {
+    console.log("Video has metadata");
+    waitForReadyState(video, video.HAVE_ENOUGH_DATA, 100, function() {
+      console.log("Video has enough data");
+      videoAsset.setVideo(video);
+    });
+  });
+
+  //only switch to video if it plays successfully
+  video.onplaying = function() {
+    console.log('Video is now loaded and playing');
+    scene.createLayer({
+      source: videoSource,
+      geometry: geometry,
+    });  }
+
+}
+
+
+
+function waitForReadyState(element, readyState, interval, done) {
+  var timer = setInterval(function() {
+    if (element.readyState >= readyState) {
+      clearInterval(timer);
+      done(null, true);
+    }
+  }, interval);
+}
+
+
+// Create geometry.
+var geometry = new Marzipano.EquirectGeometry([ { width: 1 } ]);
+
+// Create view.
+var limiter = Marzipano.RectilinearView.limit.vfov(90*Math.PI/180, 90*Math.PI/180);
+var view = new Marzipano.RectilinearView({ fov: Math.PI/2 }, limiter);
+
+// Create scene.
+var scene = viewer.createScene({
+  source: imageSource,
+  view: view,
+  geometry: geometry
+});
+
+//create imglayer
+scene.createLayer({
+  source: imageSource,
+  geometry: geometry,
+  //make this a fallback layer
+  pinFirstLevel: true
+});
+
+// Display scene.
+scene.switchTo();
+
+
+// Start playback on click.
+// Playback cannot start automatically because most browsers require the play()
+// method on the video element to be called in the context of a user action.
+document.body.addEventListener('click', tryStart);
+document.body.addEventListener('touchstart', tryStart);
+
+// Set up control for enabling/disabling device orientation.
+
+var enabled = false;
+
+var toggleElement = document.getElementById('toggleDeviceOrientation');
+
+function enable() {
+  // Request permission for iOS 13+ devices
+  if (
+    DeviceMotionEvent &&
+    typeof DeviceMotionEvent.requestPermission === "function"
+  ) {
+    DeviceMotionEvent.requestPermission();
+  }
+  deviceOrientationControlMethod.getPitch(function(err, pitch) {
+    if (!err) {
+      view.setPitch(pitch);
+    }
+  });
+  controls.enableMethod('deviceOrientation');
+  enabled = true;
+  toggleElement.className = 'enabled';
+}
+
+function disable() {
+  controls.disableMethod('deviceOrientation');
+  enabled = false;
+  toggleElement.className = '';
+}
+
+function toggle() {
+  if (enabled) {
+    disable();
+  } else {
+    enable();
+  }
+}
+
+toggleElement.addEventListener('click', toggle);
+
+//hotspots
+var container = scene.hotspotContainer();
+
+var pitch01 = -2 * Math.PI/180
+var pitch02 = -2 * Math.PI/180
+var pitch03 = 0 * Math.PI/180
+var pitch04 = -2 * Math.PI/180
+var yaw01 = 332 * Math.PI/180 //plant
+var yaw02 = 70 * Math.PI/180 //drumstokken
+var yaw03 = 149 * Math.PI/180 //emmer
+var yaw04 = 230 * Math.PI/180 //microfoon
+
+container.createHotspot(document.getElementById('iframespot01'), { yaw: yaw01, pitch: pitch01 }, 
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+container.createHotspot(document.getElementById('iframespot02'), { yaw: yaw02, pitch: pitch02 }, 
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+container.createHotspot(document.getElementById('iframespot03'), { yaw: yaw03, pitch: pitch03 }, 
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+container.createHotspot(document.getElementById('iframespot04'), { yaw: yaw04, pitch: pitch04 }, 
+  { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }});
+
+
+var wrapper01 = document.getElementById('iframespot01');
+wrapper01.innerHTML = '';
+
+var wrapper02 = document.getElementById('iframespot02');
+wrapper02.innerHTML = '';
+
+var wrapper03 = document.getElementById('iframespot03');
+wrapper03.innerHTML = '';
+
+var wrapper04 = document.getElementById('iframespot04');
+wrapper04.innerHTML = '';
+
