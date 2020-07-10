@@ -24,11 +24,17 @@ video.src = '//timfi.github.io/sdh_360player/video/TuinComp_V4.mp4'
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
 
+function hideIntro(){
+    var intro = document.getElementById("intro");
+    intro.style.display = "none";
+}
+
 // Try to start playback.
 function tryStart() {
   if (started) {
     return;
   }
+  hideIntro();
   started = true;
 
   //video.autoplay = true;
