@@ -1,18 +1,3 @@
-/*
- * Copyright 2016 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
 // Create viewer.
@@ -161,10 +146,10 @@ toggleElement.addEventListener('click', toggle);
 //hotspots
 var container = scene.hotspotContainer();
 
-var pitch01 = -2 * Math.PI/180
-var pitch02 = -2 * Math.PI/180
-var pitch03 = 0 * Math.PI/180
-var pitch04 = -2 * Math.PI/180
+var pitch01 = 0 * Math.PI/180
+var pitch02 = 0 * Math.PI/180
+var pitch03 = 2 * Math.PI/180
+var pitch04 = -3 * Math.PI/180
 var yaw01 = 332 * Math.PI/180 //plant
 var yaw02 = 70 * Math.PI/180 //drumstokken
 var yaw03 = 149 * Math.PI/180 //emmer
@@ -181,14 +166,14 @@ container.createHotspot(document.getElementById('iframespot04'), { yaw: yaw04, p
 
 
 var wrapper01 = document.getElementById('iframespot01');
-wrapper01.innerHTML = '';
+wrapper01.innerHTML = '<iframe src="" width="640" height="1200">';
 
 var wrapper02 = document.getElementById('iframespot02');
-wrapper02.innerHTML = '';
+wrapper02.innerHTML = '<iframe src="" width="640" height="1100">';
 
 var wrapper03 = document.getElementById('iframespot03');
-wrapper03.innerHTML = '';
+wrapper03.innerHTML = '<iframe src="" width="640" height="1200">';
 
 var wrapper04 = document.getElementById('iframespot04');
-wrapper04.innerHTML = '';
+wrapper04.innerHTML = '<iframe src="" width="640" height="1200">';
 
