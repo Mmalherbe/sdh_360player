@@ -40,12 +40,12 @@ var video = document.createElement('video');
 video.src = 'video/TuinComp_V4.mp4'
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
+// video.muted = true;
 
 function hideIntro(){
     intro.style.display = "none";
     intro.style.zIndex = -100;
     tryStart();
-    video.play();
     enable();
 }
 
@@ -145,11 +145,6 @@ scene.switchTo();
 
 var enabled = false;
 
-// if ( DeviceMotionEvent ){
-//   toggleElement.style.zIndex = '-100';
-// }
-
-
 function enable() {
   // Request permission for iOS 13+ devices
   // console.log("RANNN");
@@ -212,6 +207,7 @@ function closeIframe(){
   overlayVideo.innerHTML = '';
   overlayVideo.style.display = 'none';
   backButton.style.display = 'none';
+  video.muted = false;
   showToggleElement()
   for (var i = 0; i < hotspotImages.length; i++) {
     hotspotImages[i].style.display = 'block';
@@ -224,7 +220,8 @@ function iframespotClicked(input = input){
   overlayVideo.style.display = 'block';
   backButton.style.display = 'block';
   disable();
-  video.pause();
+  // video.pause();
+  video.muted = true;
   toggleElement.style.display = 'none';
   for (var i = 0; i < hotspotImages.length; i++) {
     hotspotImages[i].style.display = 'none';
