@@ -100,7 +100,7 @@ html, body {
   top: 10px;
   right: 10px;
   display: 'none';
-  background-color: rebeccapurple;
+  /* background-color: rebeccapurple; */
   z-index: 100;
 }
 
