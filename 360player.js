@@ -12,8 +12,8 @@ var hotspot03 = document.getElementById('iframespot03');
 var hotspot04 = document.getElementById('iframespot04');
 var hotspotImages = document.getElementsByClassName("transparant-img");
 
-backButton.addEventListener('click', closeIframe());
-backButton.addEventListener('touchstart', closeIframe());
+backButton.addEventListener('click', closeIframe);
+backButton.addEventListener('touchstart', closeIframe);
 
 backButton.style.display = 'none';
 toggleElement.style.display = 'none';
@@ -64,7 +64,7 @@ function showToggleElement(){
 
 // Try to start playback.
 function tryStart() {
-  closeIframe()
+  closeIframe();
   if (started) {
     return;
   }
