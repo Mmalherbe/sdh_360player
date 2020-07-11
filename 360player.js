@@ -12,6 +12,9 @@ var hotspot03 = document.getElementById('iframespot03');
 var hotspot04 = document.getElementById('iframespot04');
 var hotspotImages = document.getElementsByClassName("transparant-img");
 
+backButton.addEventListener('click', closeIframe());
+backButton.addEventListener('touchstart', closeIframe());
+
 backButton.style.display = 'none';
 toggleElement.style.display = 'none';
 
@@ -136,8 +139,7 @@ scene.switchTo();
 // Start playback on click.
 // Playback cannot start automatically because most browsers require the play()
 // method on the video element to be called in the context of a user action.
-// intro.addEventListener('click', tryStart);
-// intro.addEventListener('touchstart', tryStart);
+
 // document.body.addEventListener('click', tryStart);
 // document.body.addEventListener('touchstart', tryStart);
 
