@@ -39,7 +39,7 @@ var imageSource = new Marzipano.ImageUrlSource.fromString("//timfi.github.io/sdh
 var started = false;
 
 var video = document.createElement('video');
-video.src = '//timfi.github.io/sdh_360player/video/TuinComp_V5_small.mp4'
+video.src = '//timfi.github.io/sdh_360player/video/TuinComp_V5_Small.mp4'
 // video.src = 'video/TuinComp_V4.mp4'
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
