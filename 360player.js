@@ -32,14 +32,14 @@ controls.registerMethod('deviceOrientation', deviceOrientationControlMethod);
 // Create source.
 var videoAsset = new VideoAsset();
 var videoSource = new Marzipano.SingleAssetSource(videoAsset);
-var imageSource = new Marzipano.ImageUrlSource.fromString("//timfi.github.io/sdh_360player/still.jpg");
+var imageSource = new Marzipano.ImageUrlSource.fromString("//timfi.github.io/sdh_360player/img/still.jpg");
 // var imageSource = new Marzipano.ImageUrlSource.fromString("still.jpg");
 
 // Whether playback has started.
 var started = false;
 
 var video = document.createElement('video');
-video.src = '//timfi.github.io/sdh_360player/video/TuinComp_V5_Small.mp4'
+video.src = '//timfi.github.io/sdh_360player/video/TuinComp.mp4'
 // video.src = 'video/TuinComp_V4.mp4'
 video.crossOrigin = 'anonymous'
 video.preload = 'auto'
