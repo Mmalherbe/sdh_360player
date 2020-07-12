@@ -240,16 +240,16 @@ function iframespotClicked(input = input){
   // console.log("READDDDASDASD");
   if ( input == 1 ){
     //window.open("01_planten.html", "_self"); //TODO: change to /?
-    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436186152?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
+    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436186152?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
   } else if ( input == 2 ){
     // window.open("02_potjes.html", "_self"); //TODO: change to /?
-    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436186014?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
+    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436186014?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
   } else if ( input == 3 ){
     // window.open("03_water.html", "_self"); //TODO: change to /?
-    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436185732?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
+    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436185732?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
   } else if ( input == 4 ){
     // window.open("04_zingen.html", "_self"); //TODO: change to /?
-    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436185904?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
+    overlayVideo.innerHTML = '<iframe src="https://player.vimeo.com/video/436185904?autoplay=1&loop=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>'
   } else {
     return;
   }
