@@ -146,6 +146,7 @@ scene.switchTo();
 // Set up control for enabling/disabling device orientation.
 
 var enabled = false;
+var motion_status = 'disabled'
 
 function enable() {
   // Request permission for iOS 13+ devices
@@ -163,12 +164,14 @@ function enable() {
   });
   controls.enableMethod('deviceOrientation');
   enabled = true;
+  motion_status = "enabled";
   toggleElement.className = 'enabled';
 }
 
 function disable() {
   controls.disableMethod('deviceOrientation');
   enabled = false;
+  motion_status = 'disabled';
   toggleElement.className = '';
 }
 
@@ -214,6 +217,9 @@ function closeIframe(){
   for (var i = 0; i < hotspotImages.length; i++) {
     hotspotImages[i].style.display = 'block';
   }
+  if( motion_status == 'enabled' ){
+    enable();
+  }
 }
 
 function iframespotClicked(input = input){
@@ -221,7 +227,10 @@ function iframespotClicked(input = input){
   overlayVideo.style.zIndex = 100;
   overlayVideo.style.display = 'block';
   backButton.style.display = 'block';
-  disable();
+  if( motion_status == 'enabled'){
+    disable();
+    motion_status = "enabled";
+  }
   // video.pause();
   video.muted = true;
   toggleElement.style.display = 'none';
